@@ -1,0 +1,21 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### IntelliJ IDEA ###
+.idea/*
+!.idea
+!.idea/copyright
+!.idea/scopes
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### Mac OS ###
+.DS_Store
