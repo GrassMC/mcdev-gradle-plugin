@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.grassmc.mcdev.gradle
+package io.github.grassmc.mcdev.gradle.extensions
 
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
