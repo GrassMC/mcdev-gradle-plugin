@@ -30,3 +30,34 @@ internal data class RepositoryHolder(val name: String, val url: String) {
             action()
         }
 }
+
+/**
+ * This class hold the dependency data.
+ *
+ * If [snapshot] is true, "-SNAPSHOT" will add the suffix.
+ *
+ * The order of dependency version suffix is: [versionSuffix]"-SNAPSHOT"
+ */
+internal data class DependencyHolder(
+    val group: String,
+    val artifact: String,
+    val snapshot: Boolean = false,
+    val versionSuffix: String? = null,
+) {
+    /**
+     * Gets the dependency notation which the given [version] and the override [snapshot] version.
+     *
+     * Example: `io.github.grassmc.mcdev:mcdev-gradle-plugin:1.0.0`
+     */
+    fun notation(version: String, snapshot: Boolean? = null): String {
+        val suffix = buildString {
+            versionSuffix?.also(::append)
+            if (snapshot ?: this@DependencyHolder.snapshot) append(SNAPSHOT_SUFFIX)
+        }
+        return "$group:$artifact:${version}$suffix"
+    }
+
+    private companion object {
+        const val SNAPSHOT_SUFFIX = "-SNAPSHOT"
+    }
+}
