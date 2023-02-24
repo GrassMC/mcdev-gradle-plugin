@@ -26,14 +26,38 @@ private object CommonRepositories {
     val SONATYPE_S01 = RepositoryHolder(
         "Sonatype S01 OSS Snapshots", "https://s01.oss.sonatype.org/content/repositories/snapshots/",
     )
-    val JITPACK = RepositoryHolder("Jitpack", "https://jitpack.io")
+    val JITPACK = RepositoryHolder("Jitpack", "https://jitpack.io/")
 }
 
+/**
+ * Adds a repository which looks Sonatype Snapshots Maven repository for dependencies.
+ *
+ * The URL used to access this repository is [here](https://oss.sonatype.org/content/repositories/snapshots/).
+ *
+ * @param action a configuration action.
+ * @return The added repository.
+ */
 fun RepositoryHandler.sonatype(action: MavenArtifactRepository.() -> Unit = {}) =
     CommonRepositories.SONATYPE.configure(this, action)
 
+/**
+ * Adds a repository which looks S01 Sonatype Snapshots Maven repository for dependencies.
+ *
+ * The URL used to access this repository is [here](https://s01.oss.sonatype.org/content/repositories/snapshots/).
+ *
+ * @param action a configuration action.
+ * @return The added repository.
+ */
 fun RepositoryHandler.sonatypeS01(action: MavenArtifactRepository.() -> Unit = {}) =
     CommonRepositories.SONATYPE_S01.configure(this, action)
 
+/**
+ * Adds a repository which looks Jitpack Maven repository for dependencies.
+ *
+ * The URL used to access this repository is [here](https://jitpack.io/).
+ *
+ * @param action a configuration action.
+ * @return The added repository.
+ */
 fun RepositoryHandler.jitpack(action: MavenArtifactRepository.() -> Unit) =
     CommonRepositories.JITPACK.configure(this, action)
