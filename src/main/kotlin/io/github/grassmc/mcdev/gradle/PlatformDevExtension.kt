@@ -16,7 +16,13 @@
 
 package io.github.grassmc.mcdev.gradle
 
+import io.github.grassmc.mcdev.gradle.version.Version
+import io.github.grassmc.mcdev.gradle.version.VersionProvider
+import org.gradle.api.provider.Property
+
 interface PlatformDevExtension {
-    var apiVendor: PlatformVendor
-    var apiVersion: VersionProvider
+    val apiVendor: Property<PlatformVendor>
+    val apiVersion: Property<Version>
+
+    fun Property<Version>.set(provider: VersionProvider) = set(provider.version)
 }
