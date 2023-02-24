@@ -85,3 +85,12 @@ class DefaultVersion(val major: Int, val minor: Int, val patch: Int, val snapsho
             }
     }
 }
+
+/**
+ * A container object provides a immutable [version] object.
+ */
+data class ImmutableVersionProvider(override val version: Version) : VersionProvider
+
+fun VersionProvider.of(version: Version) = ImmutableVersionProvider(version)
+
+fun VersionProvider.from(version: String) = ImmutableVersionProvider(DefaultVersion.parse(version))

@@ -30,6 +30,9 @@ interface Version : Comparable<Version> {
 
 /**
  * A container object provides a version.
+ *
+ * @see VersionProvider.of
+ * @see VersionProvider.from
  */
 interface VersionProvider {
     /**
