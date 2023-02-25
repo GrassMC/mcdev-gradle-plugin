@@ -19,7 +19,7 @@ package io.github.grassmc.mcdev.gradle.version
 /**
  * List of Minecraft versions from 1.8 to latest.
  */
-enum class MinecraftVersion(private val versionString: String) : VersionProvider {
+enum class MinecraftVersion(private val versionString: String) : Version {
     V1_8("1.8"),
     V1_8_1("1.8.1"),
     V1_8_2("1.8.2"),
@@ -71,7 +71,11 @@ enum class MinecraftVersion(private val versionString: String) : VersionProvider
     V1_19_2("1.19.2"),
     V1_19_3("1.19.3");
 
-    override val version: Version = DefaultVersion.parse(versionString)
+    val version: Version = DefaultVersion.parse(versionString)
+
+    override fun asString(): String = version.asString()
+
+    override fun toString(): String = asString()
 
     companion object {
         /**
@@ -94,7 +98,7 @@ enum class MinecraftVersion(private val versionString: String) : VersionProvider
          * Gets a [MinecraftVersion] matching the [minecraftVersion] string, throw an [IllegalArgumentException] if not
          * found.
          */
-        fun match(minecraftVersion: String) =
+        fun matching(minecraftVersion: String) =
             checkNotNull(find(minecraftVersion)) { "Couldn't found any MinecraftVersion match '$minecraftVersion'!" }
     }
 }
