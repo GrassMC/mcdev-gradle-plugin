@@ -17,9 +17,8 @@
 package io.github.grassmc.mcdev.gradle
 
 import io.github.grassmc.mcdev.gradle.version.Version
-import org.gradle.api.provider.Property
 
 interface PlatformDevExtension {
-    val apiVendor: Property<PlatformVendor>
-    val apiVersion: Property<Version>
+    val apiVendor: PlatformVendor
+    val apiVersion: Version
 }
