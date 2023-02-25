@@ -27,16 +27,3 @@ interface Version : Comparable<Version> {
      */
     fun asString(): String
 }
-
-/**
- * A container object provides a version.
- *
- * @see VersionProvider.of
- * @see VersionProvider.from
- */
-interface VersionProvider {
-    /**
-     * Gets the [version] represent the container.
-     */
-    val version: Version
-}
