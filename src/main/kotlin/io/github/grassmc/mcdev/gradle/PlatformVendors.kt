@@ -20,20 +20,14 @@ interface PlatformVendor {
     val displayName: String
 }
 
-enum class ServerVendor : PlatformVendor {
-    Spigot,
-    Paper,
-    Purpur,
-    Krypton;
-
-    override val displayName: String
-        get() = this.name
+enum class ServerVendor(override val displayName: String) : PlatformVendor {
+    SpigotMC("Spigot"),
+    PaperMC("Paper"),
+    PurpurMC("Purpur");
 }
 
-enum class ProxyVendor(displayName: String? = null) : PlatformVendor {
+enum class ProxyVendor(override val displayName: String) : PlatformVendor {
     BungeeCord("Bungee"),
-    Waterfall,
-    Velocity;
-
-    override val displayName: String = displayName ?: this.name
+    Waterfall("Waterfall"),
+    Velocity("Velocity");
 }
