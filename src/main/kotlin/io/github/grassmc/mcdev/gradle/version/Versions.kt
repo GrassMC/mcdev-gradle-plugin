@@ -17,11 +17,11 @@
 package io.github.grassmc.mcdev.gradle.version
 
 /**
- * A parsed artifact version.
+ * An artifact version.
  *
  * @see DefaultVersion
  */
-interface Version : Comparable<Version> {
+interface Version {
     /**
      * Gets the original string representation of the version.
      */

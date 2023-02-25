@@ -30,7 +30,8 @@ import kotlin.math.max
  *
  * @constructor Creates a version from all three components.
  */
-class DefaultVersion(val major: Int, val minor: Int, val patch: Int, val snapshot: Boolean = false) : Version {
+class DefaultVersion(val major: Int, val minor: Int, val patch: Int, val snapshot: Boolean = false) : Version,
+    Comparable<DefaultVersion> {
     /**
      * Creates a version from [major] and [minor] components, leaving [patch] component `-1`.
      */
@@ -41,8 +42,7 @@ class DefaultVersion(val major: Int, val minor: Int, val patch: Int, val snapsho
 
     override fun asString(): String = versionString
 
-    override fun compareTo(other: Version): Int =
-        if (other is DefaultVersion) version - other.version else -other.compareTo(this)
+    override fun compareTo(other: DefaultVersion): Int = version - other.version
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -85,3 +85,22 @@ class DefaultVersion(val major: Int, val minor: Int, val patch: Int, val snapsho
             }
     }
 }
+
+private data class ImmutableVersion(val version: String) : Version {
+    override fun asString(): String = version
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ImmutableVersion) return false
+        return this.version == other.version
+    }
+
+    override fun hashCode(): Int = version.hashCode()
+
+    override fun toString(): String = asString()
+}
+
+/**
+ * Creates new an instance of [Version] by given [version] string.
+ */
+fun Version.from(version: String): Version = ImmutableVersion(version)
