@@ -21,7 +21,7 @@ import io.github.grassmc.mcdev.gradle.version.MinecraftVersion.*
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
 internal object ServerDependencies {
-    private const val R0_1_SUFFIX = "-R0.1"
+    const val R0_1_SUFFIX = "-R0.1"
 
     private val SPIGOT_API = DependencyHolder("org.spigotmc", "spigot-api", true, R0_1_SUFFIX)
 
