@@ -19,7 +19,7 @@ package io.github.grassmc.mcdev.gradle.extensions
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 
-private object CommonRepositories {
+internal object CommonRepositories {
     val SONATYPE = RepositoryHolder(
         "Sonatype OSS Snapshots", "https://oss.sonatype.org/content/repositories/snapshots/",
     )
