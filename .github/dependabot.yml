@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: gradle
+    directory: /
+    commit-message:
+      prefix: "⬆️ chore(deps)"
+
+    schedule:
+      interval: weekly
+      timezone: Asia/Ho_Chi_Minh
+      time: 07:00
+
+    labels:
+      - "type: chore"
