@@ -88,17 +88,22 @@ enum class MinecraftVersion(private val versionString: String) : Version {
         private val MAP_BY_STRINGS = VALUES.associateBy(MinecraftVersion::versionString)
 
         /**
-         * Finds a [MinecraftVersion] matching the [minecraftVersion] string.
+         * Finds a [MinecraftVersion] matching the [version] string.
          *
          * @return the founded version, `null` if not found.
          */
-        fun find(minecraftVersion: String) = MAP_BY_STRINGS[minecraftVersion]
+        fun find(version: String) = MAP_BY_STRINGS[version]
 
         /**
-         * Gets a [MinecraftVersion] matching the [minecraftVersion] string, throw an [IllegalArgumentException] if not
+         * Gets a [MinecraftVersion] matching the [version] string, throw an [IllegalArgumentException] if not
          * found.
          */
-        fun matching(minecraftVersion: String) =
-            checkNotNull(find(minecraftVersion)) { "Couldn't found any MinecraftVersion match '$minecraftVersion'!" }
+        fun matching(version: String) =
+            checkNotNull(find(version)) { "Couldn't found any MinecraftVersion match '$version'!" }
+
+        /**
+         * Gets a [MinecraftVersion] from [version] instance, throw an [IllegalArgumentException] if not found.
+         */
+        fun matching(version: Version) = version as? MinecraftVersion ?: matching(version.asString())
     }
 }
