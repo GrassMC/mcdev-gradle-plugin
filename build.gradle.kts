@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 fun property(name: String) = project.findProperty(name)?.toString()
 
 plugins {
-    `java-gradle-plugin`
     `kotlin-dsl`
     id("com.gradle.plugin-publish") version "1.1.0"
     signing
