@@ -7,8 +7,9 @@ updates:
 
     schedule:
       interval: weekly
+      day: saturday
       timezone: Asia/Ho_Chi_Minh
-      time: 07:00
+      time: "06:00"
 
     labels:
       - "type: chore"
