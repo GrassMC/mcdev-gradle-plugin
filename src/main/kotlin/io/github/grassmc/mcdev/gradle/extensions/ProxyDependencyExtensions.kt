@@ -25,14 +25,32 @@ internal object ProxyDependencies {
     val WATERFALL_API = DependencyHolder("io.github.waterfallmc", "waterfall-api", true, ServerDependencies.R0_1_SUFFIX)
 }
 
+/**
+ * Builds the dependency notation for the `velocity-api` at the given [version].
+ */
 fun DependencyHandler.velocityApi(version: String) = ProxyDependencies.VELOCITY_API.notation(version)
 
+/**
+ * Builds the dependency notation for the `velocity-api` at the given [version].
+ */
 fun DependencyHandler.velocityApi(version: Version) = velocityApi(version.asString())
 
+/**
+ * Builds the dependency notation for the `bungeecord-api` at the given [version].
+ */
 fun DependencyHandler.bungeecordApi(version: String) = ProxyDependencies.BUNGEE_CORD_API.notation(version)
 
+/**
+ * Builds the dependency notation for the `bungeecord-api` at the given [version].
+ */
 fun DependencyHandler.bungeecordApi(version: Version) = bungeecordApi(version.asString())
 
+/**
+ * Builds the dependency notation for the `waterfall-api` at the given [version].
+ */
 fun DependencyHandler.waterfallApi(version: String) = ProxyDependencies.WATERFALL_API.notation(version)
 
+/**
+ * Builds the dependency notation for the `waterfall-api` at the given [version].
+ */
 fun DependencyHandler.waterfallApi(version: Version) = waterfallApi(version.asString())
