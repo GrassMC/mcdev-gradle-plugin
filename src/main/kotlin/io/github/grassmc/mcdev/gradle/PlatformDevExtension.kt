@@ -25,10 +25,10 @@ interface PlatformDevExtension {
     /**
      * The platform vendor provides their development api.
      */
-    val apiVendor: PlatformVendor
+    var apiVendor: PlatformVendor
 
     /**
      * Version of the [apiVendor] libraries that are added to compile classpath.
      */
-    val apiVersion: Version
+    var apiVersion: Version
 }
