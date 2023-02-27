@@ -103,4 +103,4 @@ private data class ImmutableVersion(val version: String) : Version {
 /**
  * Creates new an instance of [Version] by given [version] string.
  */
-fun Version.from(version: String): Version = ImmutableVersion(version)
+fun Version.Companion.from(version: String): Version = ImmutableVersion(version)
