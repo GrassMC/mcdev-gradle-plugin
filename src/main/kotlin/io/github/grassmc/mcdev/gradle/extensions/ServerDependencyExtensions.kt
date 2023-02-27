@@ -74,14 +74,32 @@ internal object ServerDependencies {
     }
 }
 
+/**
+ * Builds the dependency notation for the `spigot-api` at the given Minecraft [version].
+ */
 fun DependencyHandler.spigotApi(version: MinecraftVersion): String = ServerDependencies.spigotApiNotation(version)
 
+/**
+ * Builds the dependency notation for the `spigot-api` at the given Minecraft [version].
+ */
 fun DependencyHandler.spigotApi(version: String) = spigotApi(MinecraftVersion.matching(version))
 
+/**
+ * Builds the dependency notation for the `paper-api` at the given Minecraft [version].
+ */
 fun DependencyHandler.paperApi(version: MinecraftVersion): String = ServerDependencies.paperApiNotation(version)
 
+/**
+ * Builds the dependency notation for the `paper-api` at the given Minecraft [version].
+ */
 fun DependencyHandler.paperApi(version: String) = paperApi(MinecraftVersion.matching(version))
 
+/**
+ * Builds the dependency notation for the `purpur-api` at the given Minecraft [version].
+ */
 fun DependencyHandler.purpurApi(version: MinecraftVersion): String = ServerDependencies.purpurApiNotation(version)
 
+/**
+ * Builds the dependency notation for the `purpur-api` at the given Minecraft [version].
+ */
 fun DependencyHandler.purpurApi(version: String) = purpurApi(MinecraftVersion.matching(version))
