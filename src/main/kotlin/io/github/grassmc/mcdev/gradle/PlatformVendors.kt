@@ -16,18 +16,37 @@
 
 package io.github.grassmc.mcdev.gradle
 
+import io.github.grassmc.mcdev.gradle.extensions.DependencyHolder
+import io.github.grassmc.mcdev.gradle.extensions.ProxyDependencies
+import io.github.grassmc.mcdev.gradle.extensions.ServerDependencies
+import io.github.grassmc.mcdev.gradle.version.MinecraftVersion
+import io.github.grassmc.mcdev.gradle.version.Version
+
 interface PlatformVendor {
     val displayName: String
+
+    fun apiNotation(version: Version): String
 }
 
-enum class ServerVendor(override val displayName: String) : PlatformVendor {
-    SpigotMC("Spigot"),
-    PaperMC("Paper"),
-    PurpurMC("Purpur");
+enum class ServerVendor(
+    override val displayName: String,
+    private val apiNotationSupplier: (version: MinecraftVersion) -> String,
+) : PlatformVendor {
+    SpigotMC("Spigot", ServerDependencies::spigotApiNotation),
+    PaperMC("Paper", ServerDependencies::paperApiNotation),
+    PurpurMC("Purpur", ServerDependencies::purpurApiNotation);
+
+    override fun apiNotation(version: Version): String =
+        apiNotationSupplier(version as? MinecraftVersion ?: MinecraftVersion.matching(version))
 }
 
-enum class ProxyVendor(override val displayName: String) : PlatformVendor {
-    BungeeCord("Bungee"),
-    Waterfall("Waterfall"),
-    Velocity("Velocity");
+enum class ProxyVendor(
+    override val displayName: String,
+    private val apiDependency: DependencyHolder,
+) : PlatformVendor {
+    Velocity("Velocity", ProxyDependencies.VELOCITY_API),
+    BungeeCord("Bungee", ProxyDependencies.BUNGEE_CORD_API),
+    Waterfall("Waterfall", ProxyDependencies.WATERFALL_API);
+
+    override fun apiNotation(version: Version): String = apiDependency.notation(version.asString())
 }

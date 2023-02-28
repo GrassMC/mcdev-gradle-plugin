@@ -26,4 +26,11 @@ interface Version {
      * Gets the original string representation of the version.
      */
     fun asString(): String
+
+    companion object {
+        /**
+         * An unknown version.
+         */
+        val UNKNOWN = from("unknown")
+    }
 }
