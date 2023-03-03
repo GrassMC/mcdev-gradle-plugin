@@ -65,7 +65,8 @@ class DefaultVersion(val major: Int, val minor: Int, val patch: Int, val snapsho
          */
         fun parse(version: String): DefaultVersion {
             val snapshot = version.endsWith(SNAPSHOT_SUFFIX)
-            val verWithoutSnapshot = version.substring(0 until version.lastIndexOf(SNAPSHOT_SUFFIX))
+            val verWithoutSnapshot =
+                if (snapshot) version.substring(0 until version.lastIndexOf(SNAPSHOT_SUFFIX)) else version
             val parts = verWithoutSnapshot.split(Regex("\\."), 3)
 
             if (parts.size > 2) return DefaultVersion(parts[0].toInt(), parts[1].toInt(), parts[2].toInt(), snapshot)
