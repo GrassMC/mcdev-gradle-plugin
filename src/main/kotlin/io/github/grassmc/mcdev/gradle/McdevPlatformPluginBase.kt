@@ -34,8 +34,10 @@ abstract class McdevPlatformPluginBase(protected val platformName: String) : Plu
     override fun apply(project: Project): Unit = project.run {
         applyPlugin<JavaPlugin>()
 
-        val extension = extensions.create<McdevProjectExtension>(EXTENSION_NAME)
+        val extension = extensions
+            .create<McdevProjectExtension>(EXTENSION_NAME)
             .also { configDefaultProjectExtension(it) }
+        setupRepositories(extension.apiVendor)
         setupDependency(extension)
     }
 
