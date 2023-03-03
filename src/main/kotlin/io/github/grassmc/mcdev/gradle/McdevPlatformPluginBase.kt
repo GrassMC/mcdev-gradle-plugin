@@ -24,29 +24,35 @@ import io.github.grassmc.mcdev.gradle.extensions.paperMC
 import io.github.grassmc.mcdev.gradle.extensions.purpurMC
 import io.github.grassmc.mcdev.gradle.extensions.sonatype
 import io.github.grassmc.mcdev.gradle.extensions.spigotMC
-import io.github.grassmc.mcdev.gradle.version.Version
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.internal.tasks.JvmConstants
-import org.gradle.kotlin.dsl.apply
+import org.gradle.api.plugins.JavaPlugin
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.get
 
-internal abstract class AbstractPlatformPlugin(private val platformType: PlatformType) : Plugin<Project> {
-    override fun apply(project: Project): Unit = with(project) {
-        plugins.apply(McdevBasePlugin::class)
+abstract class McdevPlatformPluginBase(protected val platformName: String) : Plugin<Project> {
+    override fun apply(project: Project): Unit = project.run {
+        applyPlugin<JavaPlugin>()
 
-        configurePlatformDevEnv()
+        val extension = extensions.create<McdevProjectExtension>(EXTENSION_NAME)
+        setupPlatformVendorDependency(extension)
     }
 
-    private fun Project.configurePlatformDevEnv() =
-        extensions.create("${platformType.identifier}Dev", PlatformDevExtension::class).run {
-            repositories.setupPlatformApiVendorRepo(apiVendor)
-            setupPlatformVendorDependency(apiVendor, apiVersion)
+    private fun Project.setupPlatformVendorDependency(extension: McdevProjectExtension) {
+        configurations.create(MCDEV_CONFIGURATION_NAME) {
+            platformVendorArtifactConfigurationNames.forEach {
+                configurations[it].extendsFrom(this)
+            }
         }
+        afterEvaluate {
+            repositories.setupPlatformVendorRepository(extension.apiVendor)
+            dependencies.add(MCDEV_CONFIGURATION_NAME, extension.apiVendor.dependencyNotation(extension.apiVersion))
+        }
+    }
 
-    private fun RepositoryHandler.setupPlatformApiVendorRepo(vendor: PlatformVendor) {
+    private fun RepositoryHandler.setupPlatformVendorRepository(vendor: PlatformVendor) {
         when (vendor) {
             SpigotMC -> findByName(MinecraftRepositories.SPIGOT_MC.name) ?: spigotMC()
             PurpurMC -> findByName(MinecraftRepositories.PURPUR_MC.name) ?: purpurMC()
@@ -55,15 +61,13 @@ internal abstract class AbstractPlatformPlugin(private val platformType: Platfor
         }
     }
 
-    private fun Project.setupPlatformVendorDependency(vendor: PlatformVendor, version: Version) {
-        val platformApiConfiguration = configurations.create("platformApi")
-        dependencies.add(platformApiConfiguration.name, vendor.apiNotation(version))
+    companion object {
+        const val EXTENSION_NAME = "mcdev"
+        const val MCDEV_CONFIGURATION_NAME = "mcdev"
 
-        platformVendorArtifactConfiguraionNames.forEach {
-            configurations[it].extendsFrom(platformApiConfiguration)
-        }
+        inline fun <reified T : Plugin<*>> Project.applyPlugin() = pluginManager.apply(T::class.java)
     }
 }
 
-private val platformVendorArtifactConfiguraionNames =
+private val platformVendorArtifactConfigurationNames =
     listOf(JvmConstants.COMPILE_ONLY_CONFIGURATION_NAME, JvmConstants.TEST_IMPLEMENTATION_CONFIGURATION_NAME)
