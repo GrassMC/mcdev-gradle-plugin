@@ -25,28 +25,28 @@ import io.github.grassmc.mcdev.gradle.version.Version
 interface PlatformVendor {
     val displayName: String
 
-    fun apiNotation(version: Version): String
+    fun dependencyNotation(version: Version): String
 }
 
 enum class ServerVendor(
     override val displayName: String,
-    private val apiNotationSupplier: (version: MinecraftVersion) -> String,
+    private val notationSupplier: (version: MinecraftVersion) -> String,
 ) : PlatformVendor {
     SpigotMC("Spigot", ServerDependencies::spigotApiNotation),
     PaperMC("Paper", ServerDependencies::paperApiNotation),
     PurpurMC("Purpur", ServerDependencies::purpurApiNotation);
 
-    override fun apiNotation(version: Version): String =
-        apiNotationSupplier(version as? MinecraftVersion ?: MinecraftVersion.matching(version))
+    override fun dependencyNotation(version: Version) =
+        notationSupplier(version as? MinecraftVersion ?: MinecraftVersion.matching(version))
 }
 
 enum class ProxyVendor(
     override val displayName: String,
-    private val apiDependency: DependencyHolder,
+    private val dependency: DependencyHolder,
 ) : PlatformVendor {
     Velocity("Velocity", ProxyDependencies.VELOCITY_API),
-    BungeeCord("Bungee", ProxyDependencies.BUNGEE_CORD_API),
+    BungeeCord("BungeeCord", ProxyDependencies.BUNGEE_CORD_API),
     Waterfall("Waterfall", ProxyDependencies.WATERFALL_API);
 
-    override fun apiNotation(version: Version): String = apiDependency.notation(version.asString())
+    override fun dependencyNotation(version: Version) = dependency.notation(version.asString())
 }
