@@ -22,11 +22,11 @@ import io.github.grassmc.mcdev.gradle.extensions.CommonRepositories
 import io.github.grassmc.mcdev.gradle.extensions.MinecraftRepositories
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.internal.tasks.JvmConstants
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.repositories
 
 abstract class McdevPlatformPluginBase(protected val platformName: String) : Plugin<Project> {
     protected abstract fun configDefaultProjectExtension(extension: McdevProjectExtension)
@@ -39,7 +39,7 @@ abstract class McdevPlatformPluginBase(protected val platformName: String) : Plu
         setupDependency(extension)
     }
 
-    private fun RepositoryHandler.setupRepositories(vendor: PlatformVendor) {
+    private fun Project.setupRepositories(vendor: PlatformVendor) = project.repositories {
         mavenCentral()
         when (vendor) {
             PurpurMC -> MinecraftRepositories.PURPUR_MC.configureIfNotExist(this)
