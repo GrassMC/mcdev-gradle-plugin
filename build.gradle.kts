@@ -50,7 +50,7 @@ gradlePlugin {
         listOf("spigot").forEach {
             create(it) {
                 id = "$prefix.$it"
-                implementationClass = "$prefix.gradle.Mcdev{${it.capitalized()}Plugin}"
+                implementationClass = "$prefix.gradle.Mcdev${it.capitalized()}Plugin"
             }
         }
     }
