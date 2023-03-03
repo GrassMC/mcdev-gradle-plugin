@@ -19,9 +19,9 @@ package io.github.grassmc.mcdev.gradle
 import io.github.grassmc.mcdev.gradle.version.Version
 
 /**
- * DSL extension that is used to configure platform api enviroment for the entire project.
+ * DSL extension that is used to configure the platform api environment for the entire project.
  */
-interface PlatformDevExtension {
+interface McdevPlatformConfig {
     /**
      * The platform vendor provides their development api.
      */
@@ -31,4 +31,22 @@ interface PlatformDevExtension {
      * Version of the [apiVendor] libraries that are added to compile classpath.
      */
     var apiVersion: Version
+}
+
+/**
+ * Represents a vendor of platform software.
+ *
+ * @see ServerVendor
+ * @see ProxyVendor
+ */
+interface PlatformVendor {
+    /**
+     * Gets the display name of the software.
+     */
+    val displayName: String
+
+    /**
+     * Builds the dependency notation for the platform api at the given [version].
+     */
+    fun dependencyNotation(version: Version): String
 }

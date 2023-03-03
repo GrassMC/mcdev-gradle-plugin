@@ -24,6 +24,8 @@ import org.gradle.kotlin.dsl.maven
  * This class hold the [name] and the [url] of Maven repository.
  */
 internal data class RepositoryHolder(val name: String, val url: String) {
+    fun configureIfNotExist(handler: RepositoryHandler) = handler.findByName(name) ?: configure(handler)
+
     fun configure(handler: RepositoryHandler, action: MavenArtifactRepository.() -> Unit = {}) =
         handler.maven(url) {
             name = this@RepositoryHolder.name

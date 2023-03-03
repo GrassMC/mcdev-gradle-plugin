@@ -1,3 +1,4 @@
+import org.gradle.configurationcache.extensions.capitalized
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun property(name: String) = project.findProperty(name)?.toString()
@@ -44,6 +45,19 @@ testing {
 
 gradlePlugin {
     testSourceSets(sourceSets["functionalTest"])
+    plugins {
+        val prefix = "io.github.grassmc.mcdev"
+        listOf("spigot", "paper", "purpur", "velocity", "waterfall").forEach {
+            create(it) {
+                id = "$prefix.$it"
+                implementationClass = "$prefix.gradle.Mcdev${it.capitalized()}Plugin"
+            }
+        }
+        create("bungeeCord") {
+            id = "$prefix.bungeecord"
+            implementationClass = "$prefix.gradle.McdevBungeCordPlugin"
+        }
+    }
 }
 
 tasks {
