@@ -32,3 +32,21 @@ interface McdevPlatformConfig {
      */
     var apiVersion: Version
 }
+
+/**
+ * Represents a vendor of platform software.
+ *
+ * @see ServerVendor
+ * @see ProxyVendor
+ */
+interface PlatformVendor {
+    /**
+     * Gets the display name of the software.
+     */
+    val displayName: String
+
+    /**
+     * Builds the dependency notation for the platform api at the given [version].
+     */
+    fun dependencyNotation(version: Version): String
+}
