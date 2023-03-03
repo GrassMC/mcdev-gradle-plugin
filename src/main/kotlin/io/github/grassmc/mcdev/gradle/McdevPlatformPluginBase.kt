@@ -33,10 +33,13 @@ import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.get
 
 abstract class McdevPlatformPluginBase(protected val platformName: String) : Plugin<Project> {
+    protected abstract fun configDefaultProjectExtension(extension: McdevProjectExtension)
+
     override fun apply(project: Project): Unit = project.run {
         applyPlugin<JavaPlugin>()
 
         val extension = extensions.create<McdevProjectExtension>(EXTENSION_NAME)
+            .also { configDefaultProjectExtension(it) }
         setupPlatformVendorDependency(extension)
     }
 
