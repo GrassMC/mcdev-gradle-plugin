@@ -23,7 +23,7 @@ import io.github.grassmc.mcdev.gradle.version.MinecraftVersion
  */
 abstract class McdevSpigotPlugin : McdevPlatformPluginBase("spigot") {
     override fun configDefaultProjectExtension(extension: McdevProjectExtension) = extension.run {
-        apiVendor = ServerVendor.SpigotMC
+        defaultVendor(ServerVendor.SpigotMC)
         apiVersion = MinecraftVersion.LATEST
     }
 }
