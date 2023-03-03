@@ -21,10 +21,34 @@ import io.github.grassmc.mcdev.gradle.extensions.ProxyDependencies
 import io.github.grassmc.mcdev.gradle.extensions.ServerDependencies
 import io.github.grassmc.mcdev.gradle.version.MinecraftVersion
 import io.github.grassmc.mcdev.gradle.version.Version
+import org.gradle.api.Project
+import javax.inject.Inject
 
-abstract class McdevProjectExtension : McdevPlatformConfig {
-    override lateinit var apiVendor: PlatformVendor
+abstract class McdevProjectExtension @Inject constructor(private val project: Project) : McdevPlatformConfig {
+    private lateinit var _apiVendor: PlatformVendor
+
+    @set:Deprecated(USE_PLUGIN_INSTEAD_WARN_MESSAGE)
+    override var apiVendor: PlatformVendor
+        get() = _apiVendor
+        set(value) {
+            _apiVendor = value
+            project.warnUsePluginInstead()
+        }
     override lateinit var apiVersion: Version
+
+    /**
+     * Sets [apiVendor] with given [vendor] as default value.
+     */
+    internal fun defaultVendor(vendor: PlatformVendor) {
+        _apiVendor = vendor
+    }
+
+    private fun Project.warnUsePluginInstead() = afterEvaluate { logger.lifecycle(USE_PLUGIN_INSTEAD_WARN_MESSAGE) }
+
+    companion object {
+        private const val USE_PLUGIN_INSTEAD_WARN_MESSAGE =
+            "Please use the plugin available for each platform instead of changing the apiVendor."
+    }
 }
 
 /**
