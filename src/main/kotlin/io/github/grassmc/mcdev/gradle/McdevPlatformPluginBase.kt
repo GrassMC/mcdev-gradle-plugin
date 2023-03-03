@@ -40,22 +40,22 @@ abstract class McdevPlatformPluginBase(protected val platformName: String) : Plu
 
         val extension = extensions.create<McdevProjectExtension>(EXTENSION_NAME)
             .also { configDefaultProjectExtension(it) }
-        setupPlatformVendorDependency(extension)
+        setupDependency(extension)
     }
 
-    private fun Project.setupPlatformVendorDependency(extension: McdevProjectExtension) {
+    private fun Project.setupDependency(extension: McdevProjectExtension) {
         configurations.create(MCDEV_CONFIGURATION_NAME) {
             platformVendorArtifactConfigurationNames.forEach {
                 configurations[it].extendsFrom(this)
             }
         }
         afterEvaluate {
-            repositories.setupPlatformVendorRepository(extension.apiVendor)
+            repositories.setupRepositories(extension.apiVendor)
             dependencies.add(MCDEV_CONFIGURATION_NAME, extension.apiVendor.dependencyNotation(extension.apiVersion))
         }
     }
 
-    private fun RepositoryHandler.setupPlatformVendorRepository(vendor: PlatformVendor) {
+    private fun RepositoryHandler.setupRepositories(vendor: PlatformVendor) {
         when (vendor) {
             SpigotMC -> findByName(MinecraftRepositories.SPIGOT_MC.name) ?: spigotMC()
             PurpurMC -> findByName(MinecraftRepositories.PURPUR_MC.name) ?: purpurMC()
