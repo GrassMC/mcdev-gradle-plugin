@@ -20,10 +20,6 @@ import io.github.grassmc.mcdev.gradle.ProxyVendor.*
 import io.github.grassmc.mcdev.gradle.ServerVendor.*
 import io.github.grassmc.mcdev.gradle.extensions.CommonRepositories
 import io.github.grassmc.mcdev.gradle.extensions.MinecraftRepositories
-import io.github.grassmc.mcdev.gradle.extensions.paperMC
-import io.github.grassmc.mcdev.gradle.extensions.purpurMC
-import io.github.grassmc.mcdev.gradle.extensions.sonatype
-import io.github.grassmc.mcdev.gradle.extensions.spigotMC
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.RepositoryHandler
@@ -43,6 +39,15 @@ abstract class McdevPlatformPluginBase(protected val platformName: String) : Plu
         setupDependency(extension)
     }
 
+    private fun RepositoryHandler.setupRepositories(vendor: PlatformVendor) {
+        when (vendor) {
+            SpigotMC -> MinecraftRepositories.SPIGOT_MC.configureIfNotExist(this)
+            PurpurMC -> MinecraftRepositories.PURPUR_MC.configureIfNotExist(this)
+            BungeeCord -> CommonRepositories.SONATYPE.configureIfNotExist(this)
+            PaperMC, Velocity, Waterfall -> MinecraftRepositories.PAPER_MC.configureIfNotExist(this)
+        }
+    }
+
     private fun Project.setupDependency(extension: McdevProjectExtension) {
         configurations.create(MCDEV_CONFIGURATION_NAME) {
             platformVendorArtifactConfigurationNames.forEach {
@@ -52,15 +57,6 @@ abstract class McdevPlatformPluginBase(protected val platformName: String) : Plu
         afterEvaluate {
             repositories.setupRepositories(extension.apiVendor)
             dependencies.add(MCDEV_CONFIGURATION_NAME, extension.apiVendor.dependencyNotation(extension.apiVersion))
-        }
-    }
-
-    private fun RepositoryHandler.setupRepositories(vendor: PlatformVendor) {
-        when (vendor) {
-            SpigotMC -> findByName(MinecraftRepositories.SPIGOT_MC.name) ?: spigotMC()
-            PurpurMC -> findByName(MinecraftRepositories.PURPUR_MC.name) ?: purpurMC()
-            BungeeCord -> findByName(CommonRepositories.SONATYPE.name) ?: sonatype()
-            PaperMC, Velocity, Waterfall -> findByName(MinecraftRepositories.PAPER_MC.name) ?: paperMC()
         }
     }
 
