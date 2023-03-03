@@ -40,6 +40,7 @@ abstract class McdevPlatformPluginBase(protected val platformName: String) : Plu
     }
 
     private fun RepositoryHandler.setupRepositories(vendor: PlatformVendor) {
+        mavenCentral()
         when (vendor) {
             PurpurMC -> MinecraftRepositories.PURPUR_MC.configureIfNotExist(this)
             BungeeCord -> CommonRepositories.SONATYPE.configureIfNotExist(this)
@@ -58,7 +59,6 @@ abstract class McdevPlatformPluginBase(protected val platformName: String) : Plu
             }
         }
         afterEvaluate {
-            repositories.setupRepositories(extension.apiVendor)
             dependencies.add(MCDEV_CONFIGURATION_NAME, extension.apiVendor.dependencyNotation(extension.apiVersion))
         }
     }
