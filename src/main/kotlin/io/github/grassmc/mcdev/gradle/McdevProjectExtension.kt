@@ -43,7 +43,7 @@ abstract class McdevProjectExtension @Inject constructor(private val project: Pr
         _apiVendor = vendor
     }
 
-    private fun Project.warnUsePluginInstead() = afterEvaluate { logger.lifecycle(USE_PLUGIN_INSTEAD_WARN_MESSAGE) }
+    private fun Project.warnUsePluginInstead() = afterEvaluate { logger.warn(USE_PLUGIN_INSTEAD_WARN_MESSAGE) }
 
     companion object {
         private const val USE_PLUGIN_INSTEAD_WARN_MESSAGE =
