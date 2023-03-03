@@ -41,10 +41,13 @@ abstract class McdevPlatformPluginBase(protected val platformName: String) : Plu
 
     private fun RepositoryHandler.setupRepositories(vendor: PlatformVendor) {
         when (vendor) {
-            SpigotMC -> MinecraftRepositories.SPIGOT_MC.configureIfNotExist(this)
             PurpurMC -> MinecraftRepositories.PURPUR_MC.configureIfNotExist(this)
             BungeeCord -> CommonRepositories.SONATYPE.configureIfNotExist(this)
             PaperMC, Velocity, Waterfall -> MinecraftRepositories.PAPER_MC.configureIfNotExist(this)
+            SpigotMC -> {
+                CommonRepositories.SONATYPE.configureIfNotExist(this)
+                MinecraftRepositories.SPIGOT_MC.configureIfNotExist(this)
+            }
         }
     }
 
