@@ -16,7 +16,7 @@
 
 package io.github.grassmc.mcdev.gradle
 
-import io.github.grassmc.mcdev.gradle.ProxyVendor.Velocity
+import io.github.grassmc.mcdev.gradle.ProxyVendor.*
 import io.github.grassmc.mcdev.gradle.ServerVendor.*
 import io.github.grassmc.mcdev.gradle.extensions.CommonRepositories
 import io.github.grassmc.mcdev.gradle.extensions.MinecraftRepositories
@@ -108,4 +108,50 @@ class McdevVelocityPluginTest {
 
     @Test
     fun `plugin with default dependencies`() = tester.testDependencies(McdevVelocityPlugin.VELOCITY_API_LATEST_VERSION)
+}
+
+class McdevBungeeCordPluginTest {
+    private lateinit var tester: PlatformPluginTester
+
+    @BeforeEach
+    fun setUp() {
+        tester = PlatformPluginTester(BungeeCord)
+    }
+
+    @Test
+    fun `plugin register extensions`() = tester.testRegister()
+
+    @Test
+    fun `plugin project extension with default values`() =
+        tester.testExtension(McdevBungeeCordPlugin.BUNGEECORD_API_LATEST_VERSION)
+
+    @Test
+    fun `plugin with default repositories`() = tester.testRepositories(MinecraftRepositories.PAPER_MC.name)
+
+    @Test
+    fun `plugin with default dependencies`() =
+        tester.testDependencies(McdevBungeeCordPlugin.BUNGEECORD_API_LATEST_VERSION)
+}
+
+class McdevWaterfallPluginTest {
+    private lateinit var tester: PlatformPluginTester
+
+    @BeforeEach
+    fun setUp() {
+        tester = PlatformPluginTester(Waterfall)
+    }
+
+    @Test
+    fun `plugin register extensions`() = tester.testRegister()
+
+    @Test
+    fun `plugin project extension with default values`() =
+        tester.testExtension(McdevBungeeCordPlugin.BUNGEECORD_API_LATEST_VERSION)
+
+    @Test
+    fun `plugin with default repositories`() = tester.testRepositories(MinecraftRepositories.PAPER_MC.name)
+
+    @Test
+    fun `plugin with default dependencies`() =
+        tester.testDependencies(McdevBungeeCordPlugin.BUNGEECORD_API_LATEST_VERSION)
 }
