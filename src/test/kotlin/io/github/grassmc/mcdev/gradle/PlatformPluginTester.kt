@@ -49,7 +49,7 @@ internal class PlatformPluginTester(private val platformVendor: PlatformVendor) 
         expectedRepos.forEach { assertContains(repos, it) }
     }
 
-    fun testDependencies(expectedDep: String) {
+    fun testDependencies(version: Version) {
         val project = createProject()
 
         val configuration = project.configurations.findByName(McdevPlatformPluginBase.MCDEV_CONFIGURATION_NAME)
@@ -57,7 +57,7 @@ internal class PlatformPluginTester(private val platformVendor: PlatformVendor) 
 
         project.afterEvaluate {
             val depNotations = configuration.dependencies.map { "${it.group}:${it.name}:${it.version}" }
-            assertContains(depNotations, expectedDep)
+            assertContains(depNotations, platformVendor.dependencyNotation(version))
         }
     }
 }

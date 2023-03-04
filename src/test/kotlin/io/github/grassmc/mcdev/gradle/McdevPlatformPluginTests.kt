@@ -16,6 +16,7 @@
 
 package io.github.grassmc.mcdev.gradle
 
+import io.github.grassmc.mcdev.gradle.ServerVendor.SpigotMC
 import io.github.grassmc.mcdev.gradle.extensions.CommonRepositories
 import io.github.grassmc.mcdev.gradle.extensions.MinecraftRepositories
 import io.github.grassmc.mcdev.gradle.version.MinecraftVersion
@@ -27,7 +28,7 @@ class McdevSpigotPluginTest {
 
     @BeforeEach
     fun setUp() {
-        tester = PlatformPluginTester(ServerVendor.SpigotMC)
+        tester = PlatformPluginTester(SpigotMC)
     }
 
     @Test
@@ -41,6 +42,5 @@ class McdevSpigotPluginTest {
         tester.testRepositories(CommonRepositories.SONATYPE.name, MinecraftRepositories.SPIGOT_MC.name)
 
     @Test
-    fun `plugin default dependencies test`() =
-        tester.testDependencies(ServerVendor.SpigotMC.dependencyNotation(MinecraftVersion.LATEST))
+    fun `plugin default dependencies test`() = tester.testDependencies(MinecraftVersion.LATEST)
 }
