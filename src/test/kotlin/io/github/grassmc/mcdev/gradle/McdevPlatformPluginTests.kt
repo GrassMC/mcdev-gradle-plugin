@@ -32,15 +32,15 @@ class McdevSpigotPluginTest {
     }
 
     @Test
-    fun `plugin register test`() = tester.testRegister()
+    fun `plugin register extensions`() = tester.testRegister()
 
     @Test
-    fun `plugin extension default values test`() = tester.testExtension(MinecraftVersion.LATEST)
+    fun `plugin project extension with default values`() = tester.testExtension(MinecraftVersion.LATEST)
 
     @Test
-    fun `plugin default repositories test`() =
+    fun `plugin with default repositories`() =
         tester.testRepositories(CommonRepositories.SONATYPE.name, MinecraftRepositories.SPIGOT_MC.name)
 
     @Test
-    fun `plugin default dependencies test`() = tester.testDependencies(MinecraftVersion.LATEST)
+    fun `plugin with default dependencies`() = tester.testDependencies(MinecraftVersion.LATEST)
 }
