@@ -71,9 +71,7 @@ enum class MinecraftVersion(private val versionString: String) : Version {
     V1_19_2("1.19.2"),
     V1_19_3("1.19.3");
 
-    val version: Version = DefaultVersion.parse(versionString)
-
-    override fun asString(): String = version.asString()
+    override fun asString(): String = versionString
 
     override fun toString(): String = asString()
 
