@@ -55,7 +55,7 @@ gradlePlugin {
         }
         create("bungeeCord") {
             id = "$prefix.bungeecord"
-            implementationClass = "$prefix.gradle.McdevBungeCordPlugin"
+            implementationClass = "$prefix.gradle.McdevBungeeCordPlugin"
         }
     }
 }
