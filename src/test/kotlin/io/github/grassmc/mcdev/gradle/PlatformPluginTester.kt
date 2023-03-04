@@ -23,7 +23,7 @@ import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-internal class PlatformPluginTester(platformVendor: PlatformVendor) {
+internal class PlatformPluginTester(private val platformVendor: PlatformVendor) {
     private val pluginId = "io.github.grassmc.mcdev.${platformVendor.displayName.lowercase()}"
 
     private fun createProject() = ProjectBuilder.builder().build().also { it.plugins.apply(pluginId) }
@@ -34,11 +34,11 @@ internal class PlatformPluginTester(platformVendor: PlatformVendor) {
         assertNotNull(project.extensions.findByName(McdevPlatformPluginBase.EXTENSION_NAME))
     }
 
-    fun testExtension(expectedVendor: ServerVendor, expectedVersion: Version) {
+    fun testExtension(expectedVersion: Version) {
         val project = createProject()
         val extension = project.extensions.getByName<McdevProjectExtension>(McdevPlatformPluginBase.EXTENSION_NAME)
 
-        assertEquals(expectedVendor, extension.apiVendor)
+        assertEquals(platformVendor, extension.apiVendor)
         assertEquals(expectedVersion, extension.apiVersion)
     }
 

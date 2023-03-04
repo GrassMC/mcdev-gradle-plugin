@@ -34,7 +34,7 @@ class McdevSpigotPluginTest {
     fun `plugin register test`() = tester.testRegister()
 
     @Test
-    fun `plugin extension default values test`() = tester.testExtension(ServerVendor.SpigotMC, MinecraftVersion.LATEST)
+    fun `plugin extension default values test`() = tester.testExtension(MinecraftVersion.LATEST)
 
     @Test
     fun `plugin default repositories test`() =
