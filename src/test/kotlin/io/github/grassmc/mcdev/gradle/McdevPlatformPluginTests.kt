@@ -16,8 +16,7 @@
 
 package io.github.grassmc.mcdev.gradle
 
-import io.github.grassmc.mcdev.gradle.ServerVendor.PaperMC
-import io.github.grassmc.mcdev.gradle.ServerVendor.SpigotMC
+import io.github.grassmc.mcdev.gradle.ServerVendor.*
 import io.github.grassmc.mcdev.gradle.extensions.CommonRepositories
 import io.github.grassmc.mcdev.gradle.extensions.MinecraftRepositories
 import io.github.grassmc.mcdev.gradle.version.MinecraftVersion
@@ -62,6 +61,27 @@ class McdevPaperPluginTest {
 
     @Test
     fun `plugin with default repositories`() = tester.testRepositories(MinecraftRepositories.PAPER_MC.name)
+
+    @Test
+    fun `plugin with default dependencies`() = tester.testDependencies(MinecraftVersion.LATEST)
+}
+
+class McdevPurpurPluginTest {
+    private lateinit var tester: PlatformPluginTester
+
+    @BeforeEach
+    fun setUp() {
+        tester = PlatformPluginTester(PurpurMC)
+    }
+
+    @Test
+    fun `plugin register extensions`() = tester.testRegister()
+
+    @Test
+    fun `plugin project extension with default values`() = tester.testExtension(MinecraftVersion.LATEST)
+
+    @Test
+    fun `plugin with default repositories`() = tester.testRepositories(MinecraftRepositories.PURPUR_MC.name)
 
     @Test
     fun `plugin with default dependencies`() = tester.testDependencies(MinecraftVersion.LATEST)
