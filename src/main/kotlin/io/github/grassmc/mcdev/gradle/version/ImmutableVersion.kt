@@ -16,19 +16,21 @@
 
 package io.github.grassmc.mcdev.gradle.version
 
-/**
- * An artifact version.
- */
-interface Version {
-    /**
-     * Gets the original string representation of the version.
-     */
-    fun asString(): String
+private data class ImmutableVersion(val version: String) : Version {
+    override fun asString(): String = version
 
-    companion object {
-        /**
-         * An unknown version.
-         */
-        val UNKNOWN = from("unknown")
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ImmutableVersion) return false
+        return this.version == other.version
     }
+
+    override fun hashCode(): Int = version.hashCode()
+
+    override fun toString(): String = asString()
 }
+
+/**
+ * Creates new an instance of [Version] by given [version] string.
+ */
+fun Version.Companion.from(version: String): Version = ImmutableVersion(version)

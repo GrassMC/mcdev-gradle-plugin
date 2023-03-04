@@ -71,9 +71,7 @@ enum class MinecraftVersion(private val versionString: String) : Version {
     V1_19_2("1.19.2"),
     V1_19_3("1.19.3");
 
-    val version: Version = DefaultVersion.parse(versionString)
-
-    override fun asString(): String = version.asString()
+    override fun asString(): String = versionString
 
     override fun toString(): String = asString()
 
@@ -95,14 +93,14 @@ enum class MinecraftVersion(private val versionString: String) : Version {
         fun find(version: String) = MAP_BY_STRINGS[version]
 
         /**
-         * Gets a [MinecraftVersion] matching the [version] string, throw an [IllegalArgumentException] if not
+         * Gets a [MinecraftVersion] matching the [version] string, throw an [IllegalStateException] if not
          * found.
          */
         fun matching(version: String) =
             checkNotNull(find(version)) { "Couldn't found any MinecraftVersion match '$version'!" }
 
         /**
-         * Gets a [MinecraftVersion] from [version] instance, throw an [IllegalArgumentException] if not found.
+         * Gets a [MinecraftVersion] from [version] instance, throw an [IllegalStateException] if not found.
          */
         fun matching(version: Version) = version as? MinecraftVersion ?: matching(version.asString())
     }
