@@ -126,7 +126,7 @@ class McdevBungeeCordPluginTest {
         tester.testExtension(McdevBungeeCordPlugin.BUNGEECORD_API_LATEST_VERSION)
 
     @Test
-    fun `plugin with default repositories`() = tester.testRepositories(MinecraftRepositories.PAPER_MC.name)
+    fun `plugin with default repositories`() = tester.testRepositories(CommonRepositories.SONATYPE.name)
 
     @Test
     fun `plugin with default dependencies`() =
