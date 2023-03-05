@@ -50,8 +50,22 @@ gradlePlugin {
         val prefix = "io.github.grassmc.mcdev"
         listOf("Spigot", "Paper", "Purpur", "Velocity", "BungeeCord", "Waterfall").forEach {
             create(it) {
-                id = "$prefix.${it.lowercase()}"
-                implementationClass = "$prefix.gradle.Mcdev$it.Plugin"
+                val platformId = it.lowercase()
+                id = "$prefix.$platformId"
+                implementationClass = "$prefix.gradle.Mcdev${it}Plugin"
+                displayName = "Mcdev $it plugin"
+                description = "A Gradle plugin for $it development."
+                tags.set(
+                    setOf(
+                        "mcdev",
+                        "minecraft-dev",
+                        "minecraft",
+                        "minecraft-plugin-development",
+                        platformId,
+                        "mcdev-$platformId",
+                        "$platformId-plugin",
+                    )
+                )
             }
         }
     }
