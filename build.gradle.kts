@@ -44,6 +44,8 @@ testing {
 }
 
 gradlePlugin {
+    website.set(property("website"))
+    vcsUrl.set(property("website"))
     testSourceSets(sourceSets["functionalTest"])
     plugins {
         val prefix = "io.github.grassmc.mcdev"
